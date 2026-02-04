@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAMP EMS Paramedic Program - Spring & Summer 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root{--camp-primary:#003366;--camp-secondary:#004d99;--camp-accent:#ff6600;--camp-gold:#ffb800;--camp-light:#e6f2ff;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-500:#64748b;--gray-600:#475569;--gray-700:#334155;--gray-800:#1e293b}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,var(--gray-50),var(--camp-light));min-height:100vh;color:var(--gray-800)}
+        .app{display:flex;min-height:100vh}
+        .sidebar{width:260px;min-height:100vh;background:linear-gradient(180deg,var(--camp-primary),#001a33);color:#fff;position:fixed;left:0;top:0;bottom:0;display:flex;flex-direction:column;box-shadow:4px 0 20px rgba(0,0,0,.15);z-index:100}
+        .sidebar-header{padding:1.5rem;border-bottom:1px solid rgba(255,255,255,.1)}
+        .logo{display:flex;align-items:center;gap:.75rem}
+        .logo-icon{width:48px;height:48px;background:linear-gradient(135deg,var(--camp-accent),var(--camp-gold));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+        .logo-text h1{font-size:1.125rem;font-weight:700}
+        .logo-text p{font-size:.75rem;color:#93c5fd}
+        .tagline{font-size:.75rem;color:#93c5fd;font-style:italic;margin-top:.75rem}
+        .nav{flex:1;padding:1rem 0;overflow-y:auto}
+        .nav-btn{width:100%;display:flex;align-items:center;gap:.75rem;padding:.75rem 1.5rem;border:none;background:0 0;color:#93c5fd;font-size:.875rem;font-weight:500;cursor:pointer;text-align:left;border-left:4px solid transparent;transition:all .2s}
+        .nav-btn:hover{background:rgba(255,255,255,.05);color:#fff}
+        .nav-btn.active{background:rgba(255,255,255,.15);color:#fff;border-left-color:var(--camp-accent)}
+        .nav-btn.active i{color:var(--camp-accent)}
+        .nav-btn i{width:20px;text-align:center}
+        .sidebar-footer{padding:1rem;border-top:1px solid rgba(255,255,255,.1)}
+        .web-link{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1rem;background:linear-gradient(135deg,var(--camp-accent),#ff8533);color:#fff;text-decoration:none;border-radius:12px;font-weight:600;font-size:.875rem;transition:all .2s}
+        .web-link:hover{transform:scale(1.02);box-shadow:0 4px 15px rgba(255,102,0,.4)}
+        .main{flex:1;margin-left:260px;padding:2rem 3rem;max-width:1200px}
+        .mobile-header{display:none;position:fixed;top:0;left:0;right:0;z-index:200;background:var(--camp-primary);color:#fff;padding:.75rem 1rem}
+        .mobile-header-content{display:flex;align-items:center;justify-content:space-between}
+        .mobile-logo{display:flex;align-items:center;gap:.75rem}
+        .mobile-logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--camp-accent),var(--camp-gold));border-radius:10px;display:flex;align-items:center;justify-content:center}
+        .menu-btn{background:0 0;border:none;color:#fff;padding:.5rem;cursor:pointer;font-size:1.25rem}
+        .mobile-nav{display:none;position:fixed;top:60px;left:0;right:0;background:#002244;border-top:1px solid rgba(255,255,255,.1);max-height:70vh;overflow-y:auto;z-index:199}
+        .mobile-nav.open{display:block}
+        .section{display:none;animation:fadeIn .3s}
+        .section.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .hero{background:linear-gradient(135deg,var(--camp-primary),var(--camp-secondary),#0066cc);border-radius:24px;padding:2.5rem;color:#fff;position:relative;overflow:hidden;margin-bottom:2rem;box-shadow:0 10px 40px rgba(0,51,102,.3)}
+        .hero::before{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;background:radial-gradient(circle,rgba(255,102,0,.2),transparent 70%);border-radius:50%}
+        .hero-badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:#93c5fd;margin-bottom:1rem}
+        .hero-badge i{color:var(--camp-gold)}
+        .hero h1{font-size:2.5rem;font-weight:800;line-height:1.2;margin-bottom:1rem;position:relative;z-index:1}
+        .hero h1 span{color:var(--camp-gold)}
+        .hero p{font-size:1.125rem;color:#bfdbfe;max-width:600px;line-height:1.7;position:relative;z-index:1}
+        .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:2rem}
+        .card{background:#fff;border-radius:16px;padding:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,.08);border:1px solid var(--gray-100);transition:all .2s}
+        .card:hover{box-shadow:0 8px 30px rgba(0,0,0,.12);transform:translateY(-2px)}
+        .card-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:1.5rem;color:#fff}
+        .card-icon.orange{background:linear-gradient(135deg,var(--camp-accent),var(--camp-gold))}
+        .card-icon.blue{background:linear-gradient(135deg,var(--camp-primary),var(--camp-secondary))}
+        .card-icon.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
+        .card h3{font-size:1.125rem;font-weight:700;color:var(--camp-primary);margin-bottom:.25rem}
+        .card-sub{font-size:.875rem;color:var(--gray-500);margin-bottom:1rem}
+        .card-content{font-size:.875rem;color:var(--gray-600);line-height:1.6}
+        .card-content strong{color:var(--gray-800)}
+        .highlight{color:var(--camp-accent);font-weight:600}
+        .alert{background:linear-gradient(135deg,#fffbeb,#fef3c7);border:1px solid #fcd34d;border-radius:16px;padding:1.5rem;margin-bottom:2rem}
+        .alert-header{display:flex;align-items:flex-start;gap:1rem}
+        .alert-icon{font-size:1.5rem;color:var(--camp-accent)}
+        .alert h3{font-size:1.125rem;font-weight:700;color:var(--camp-primary);margin-bottom:.75rem}
+        .alert ul{list-style:none}
+        .alert li{display:flex;align-items:flex-start;gap:.5rem;margin-bottom:.5rem;font-size:.9375rem;color:var(--gray-700)}
+        .alert li i{color:#22c55e;margin-top:4px}
+        .dates-box{background:#fff;border-radius:16px;padding:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,.08);border:1px solid var(--gray-100);margin-bottom:2rem}
+        .section-title{display:flex;align-items:center;gap:.5rem;font-size:1.25rem;font-weight:700;color:var(--camp-primary);margin-bottom:1.5rem}
+        .section-title i{color:var(--camp-accent)}
+        .dates-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+        .date-item{display:flex;align-items:center;gap:.75rem;padding:1rem;border-radius:12px}
+        .date-item.holiday{background:#fef3c7;border:1px solid #fcd34d}
+        .date-item.deadline{background:#fee2e2;border:1px solid #fca5a5}
+        .date-item.start{background:#dcfce7;border:1px solid #86efac}
+        .date-item.end{background:#dbeafe;border:1px solid #93c5fd}
+        .date-item.summer{background:#f3e8ff;border:1px solid #c4b5fd}
+        .date-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+        .date-item.holiday .date-dot{background:#f59e0b}
+        .date-item.deadline .date-dot{background:#ef4444}
+        .date-item.start .date-dot{background:#22c55e}
+        .date-item.end .date-dot{background:#3b82f6}
+        .date-item.summer .date-dot{background:#8b5cf6}
+        .date-info strong{display:block;font-size:.875rem;color:var(--gray-800)}
+        .date-info span{font-size:.8125rem;color:var(--gray-600)}
+        .dark-panel{background:linear-gradient(135deg,var(--camp-primary),#001a33);border-radius:16px;padding:2rem;color:#fff;margin-bottom:2rem}
+        .dark-panel h3{display:flex;align-items:center;gap:.75rem;font-size:1.5rem;font-weight:700;margin-bottom:1.5rem}
+        .dark-panel h3 i{color:var(--camp-gold)}
+        .checklist{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+        .check-item{display:flex;align-items:flex-start;gap:.75rem;font-size:.9375rem;color:#bfdbfe}
+        .check-item i{color:var(--camp-gold);margin-top:4px}
+        .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1rem;margin-bottom:2rem}
+        .stat{text-align:center;padding:1.25rem;background:linear-gradient(135deg,var(--gray-50),var(--camp-light));border-radius:12px}
+        .stat-val{font-size:1.75rem;font-weight:800;color:var(--camp-primary)}
+        .stat-label{font-size:.875rem;font-weight:600;color:var(--gray-700)}
+        .stat-sub{font-size:.75rem;color:var(--gray-500)}
+        .success{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:16px;padding:2rem;margin-bottom:2rem}
+        .success h3{font-size:1.5rem;font-weight:700;color:#166534;margin-bottom:1rem}
+        .success p{font-size:.9375rem;color:#166534;line-height:1.7;margin-bottom:1rem}
+        .success .sig{font-size:1rem;font-weight:600;font-style:italic}
+        .semester-tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+        .semester-tab{padding:.75rem 1.5rem;border-radius:12px;border:2px solid var(--gray-200);background:#fff;font-weight:600;cursor:pointer;transition:all .2s}
+        .semester-tab.active{background:var(--camp-primary);color:#fff;border-color:var(--camp-primary)}
+        .semester-tab.spring.active{background:#3b82f6;border-color:#3b82f6}
+        .semester-tab.summer.active{background:#8b5cf6;border-color:#8b5cf6}
+        .schedule-panel{display:none}
+        .schedule-panel.active{display:block}
+        .table-wrap{background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.08);border:1px solid var(--gray-100);overflow:hidden;margin-bottom:2rem}
+        .table-scroll{overflow-x:auto}
+        table{width:100%;border-collapse:collapse;min-width:600px}
+        th{background:linear-gradient(135deg,var(--camp-primary),var(--camp-secondary));color:#fff;padding:1rem 1.5rem;text-align:left;font-size:.875rem;font-weight:600}
+        th.summer-header{background:linear-gradient(135deg,#7c3aed,#8b5cf6)}
+        td{padding:1rem 1.5rem;border-bottom:1px solid var(--gray-100);font-size:.875rem}
+        tr:hover{background:var(--camp-light)}
+        tr.holiday{background:#fef3c7}
+        tr.skill-lab{background:#f0fdf4}
+        .course-badge{display:inline-block;padding:.25rem .75rem;background:var(--camp-primary);color:#fff;border-radius:20px;font-size:.75rem;font-weight:600}
+        .loc{display:flex;align-items:center;gap:.375rem;font-size:.875rem}
+        .loc.franklin{color:#7c3aed}
+        .loc.suffolk{color:#2563eb}
+        .info-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:2rem}
+        .info-card{border-radius:12px;padding:1.5rem}
+        .info-card.blue{background:var(--camp-light);border:1px solid #93c5fd}
+        .info-card.purple{background:#f3e8ff;border:1px solid #c4b5fd}
+        .info-card.green{background:#f0fdf4;border:1px solid #86efac}
+        .info-card h4{display:flex;align-items:center;gap:.5rem;font-weight:700;color:var(--camp-primary);margin-bottom:1rem}
+        .info-card h4 i{color:var(--camp-accent)}
+        .info-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;font-size:.875rem}
+        .info-row span:last-child{color:#2563eb;font-size:.75rem}
+        .course-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+        .course-stat{background:#fff;border-radius:12px;padding:1rem;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.06);border:1px solid var(--gray-100)}
+        .course-stat-dot{width:12px;height:12px;border-radius:50%;margin:0 auto .5rem}
+        .course-stat-dot.lecture{background:#3b82f6}
+        .course-stat-dot.lab{background:#22c55e}
+        .course-stat-dot.cert{background:#8b5cf6}
+        .course-stat-dot.online{background:#f97316}
+        .course-stat-val{font-size:1.5rem;font-weight:800;color:var(--camp-primary)}
+        .course-stat-label{font-size:.8125rem;color:var(--gray-600)}
+        .course-list{display:flex;flex-direction:column;gap:1rem}
+        .course-item{background:#fff;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.08);border:1px solid var(--gray-100);overflow:hidden;transition:all .2s}
+        .course-item:hover{box-shadow:0 8px 30px rgba(0,0,0,.12)}
+        .course-header{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.5rem;cursor:pointer;transition:background .2s}
+        .course-header:hover{background:var(--gray-50)}
+        .course-header-left{display:flex;align-items:center;gap:1rem}
+        .course-credits{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.875rem}
+        .course-credits.lecture{background:linear-gradient(135deg,#3b82f6,#2563eb)}
+        .course-credits.lab{background:linear-gradient(135deg,#22c55e,#16a34a)}
+        .course-credits.cert{background:linear-gradient(135deg,#8b5cf6,#7c3aed)}
+        .course-credits.online{background:linear-gradient(135deg,#f97316,#ea580c)}
+        .course-info h3{font-size:1.0625rem;font-weight:700;color:var(--camp-primary)}
+        .course-info p{font-size:.9375rem;color:var(--gray-600)}
+        .course-header-right{display:flex;align-items:center;gap:.75rem}
+        .type-badge{padding:.375rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600}
+        .type-badge.lecture{background:#dbeafe;color:#1e40af}
+        .type-badge.lab{background:#dcfce7;color:#166534}
+        .type-badge.cert{background:#f3e8ff;color:#6b21a8}
+        .type-badge.online{background:#ffedd5;color:#9a3412}
+        .type-badge.spring{background:#dbeafe;color:#1e40af}
+        .type-badge.summer{background:#f3e8ff;color:#6b21a8}
+        .chevron{transition:transform .2s}
+        .course-item.expanded .chevron{transform:rotate(90deg)}
+        .course-content{display:none;padding:0 1.5rem 1.5rem;border-top:1px solid var(--gray-100);background:var(--gray-50)}
+        .course-item.expanded .course-content{display:block}
+        .course-badges{display:flex;flex-wrap:wrap;gap:.5rem;padding-top:1rem;margin-bottom:1rem}
+        .badge-sm{padding:.375rem .75rem;border-radius:20px;font-size:.75rem;font-weight:600}
+        .badge-sm.primary{background:var(--camp-primary);color:#fff}
+        .badge-sm.accent{background:var(--camp-accent);color:#fff}
+        .badge-sm.gray{background:var(--gray-200);color:var(--gray-700)}
+        .badge-sm.spring{background:#3b82f6;color:#fff}
+        .badge-sm.summer{background:#8b5cf6;color:#fff}
+        .course-section{margin-bottom:1.25rem}
+        .course-section h4{font-size:.9375rem;font-weight:700;color:var(--camp-primary);margin-bottom:.5rem}
+        .course-section p{font-size:.875rem;color:var(--gray-600);line-height:1.6}
+        .obj-list{list-style:none}
+        .obj-list li{display:flex;align-items:flex-start;gap:.5rem;font-size:.875rem;color:var(--gray-600);margin-bottom:.5rem}
+        .obj-list i{color:#22c55e;margin-top:4px}
+        .topic-tags{display:flex;flex-wrap:wrap;gap:.5rem}
+        .topic-tag{padding:.375rem .75rem;background:#dbeafe;color:#1e40af;border-radius:20px;font-size:.75rem}
+        .req-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-bottom:2rem}
+        .req-card{background:#fff;border-radius:16px;padding:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,.08);border:1px solid var(--gray-100)}
+        .req-card h3{display:flex;align-items:center;gap:.5rem;font-size:1.25rem;font-weight:700;color:var(--camp-primary);margin-bottom:1rem}
+        .req-card h3 i{color:var(--camp-accent)}
+        .req-list{list-style:none}
+        .req-list li{display:flex;align-items:center;gap:.5rem;font-size:.875rem;color:var(--gray-700);padding:.5rem 0}
+        .req-list i{color:#22c55e}
+        .standards{background:linear-gradient(135deg,var(--camp-light),#c7d2fe);border:1px solid #93c5fd;border-radius:16px;padding:1.5rem}
+        .standards h3{font-size:1.25rem;font-weight:700;color:var(--camp-primary);margin-bottom:1rem}
+        .standards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+        .standard-item{text-align:center;padding:1rem;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+        .standard-val{font-size:2rem;font-weight:800}
+        .standard-val.orange{color:var(--camp-accent)}
+        .standard-val.blue{color:var(--camp-primary)}
+        .standard-val.green{color:#22c55e}
+        .standard-label{font-size:.8125rem;color:var(--gray-600)}
+        .textbook{background:linear-gradient(135deg,var(--camp-primary),var(--camp-secondary));border-radius:16px;padding:2rem;color:#fff;margin-bottom:2rem}
+        .textbook h3{display:flex;align-items:center;gap:.75rem;font-size:1.5rem;font-weight:700;margin-bottom:1.5rem}
+        .textbook h3 i{color:var(--camp-gold)}
+        .textbook-box{background:rgba(255,255,255,.1);border-radius:12px;padding:1.5rem}
+        .textbook-name{font-size:1.25rem;font-weight:700;margin-bottom:.5rem}
+        .textbook-info{color:#bfdbfe;font-size:.9375rem;margin-bottom:.25rem}
+        .textbook-price{font-size:2rem;font-weight:800;color:var(--camp-gold);margin:1rem 0}
+        .textbook-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.5rem;background:var(--camp-accent);color:#fff;text-decoration:none;border-radius:12px;font-weight:600;transition:all .2s}
+        .textbook-btn:hover{background:#ff8533}
+        .textbook-note{font-size:.8125rem;color:#93c5fd;margin-top:.75rem}
+        .materials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:2rem}
+        .materials-card{background:#fff;border-radius:16px;padding:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,.08);border:1px solid var(--gray-100)}
+        .materials-card h3{font-size:1.25rem;font-weight:700;color:var(--camp-primary);margin-bottom:1rem}
+        .material-item{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--gray-100)}
+        .material-item:last-child{border-bottom:none}
+        .material-name{font-weight:500;color:var(--gray-800);font-size:.875rem}
+        .material-note{font-size:.75rem;color:var(--gray-500)}
+        .material-price{font-weight:600;color:var(--camp-accent);font-size:.875rem}
+        .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-bottom:2rem}
+        .contact-card{background:linear-gradient(135deg,var(--camp-primary),var(--camp-secondary));border-radius:16px;padding:1.5rem;color:#fff}
+        .contact-header{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+        .contact-avatar{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:2rem}
+        .contact-name{font-size:1.25rem;font-weight:700}
+        .contact-title{font-size:.875rem;color:#93c5fd}
+        .contact-links{display:flex;flex-direction:column;gap:.75rem}
+        .contact-link{display:flex;align-items:center;gap:.75rem;color:#bfdbfe;text-decoration:none;transition:color .2s}
+        .contact-link:hover{color:#fff}
+        .staff-card{background:#fff;border-radius:16px;padding:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,.08);border:1px solid var(--gray-100)}
+        .staff-card h3{font-size:1.25rem;font-weight:700;color:var(--camp-primary);margin-bottom:1rem}
+        .staff-list{display:flex;flex-direction:column;gap:1rem}
+        .staff-item{padding-bottom:1rem;border-bottom:1px solid var(--gray-100)}
+        .staff-item:last-child{border-bottom:none;padding-bottom:0}
+        .staff-name{font-weight:600;color:var(--gray-800);font-size:.9375rem}
+        .staff-role{font-size:.8125rem;color:var(--gray-500)}
+        .staff-email{color:var(--camp-accent);font-size:.875rem}
+        .website-banner{background:linear-gradient(135deg,var(--camp-accent),#ff8533);border-radius:16px;padding:2rem;color:#fff;text-align:center}
+        .website-banner h3{font-size:1.5rem;font-weight:700;margin-bottom:.75rem}
+        .website-banner p{margin-bottom:1rem}
+        .website-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 2rem;background:#fff;color:var(--camp-accent);text-decoration:none;border-radius:12px;font-weight:700;transition:all .2s}
+        .website-btn:hover{background:var(--gray-100)}
+        .semester-header{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;border-radius:12px;margin-bottom:1rem;font-weight:700}
+        .semester-header.spring{background:#dbeafe;color:#1e40af}
+        .semester-header.summer{background:#f3e8ff;color:#6b21a8}
+        .doc-card{background:#fff;border-radius:16px;padding:1.5rem;box-shadow:0 4px 20px rgba(0,0,0,.08);border:1px solid var(--gray-100);margin-bottom:1rem;transition:all .2s}
+        .doc-card:hover{box-shadow:0 8px 30px rgba(0,0,0,.12);transform:translateY(-2px)}
+        .doc-header{display:flex;align-items:center;gap:1rem}
+        .doc-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+        .doc-icon.pdf{background:#fee2e2;color:#dc2626}
+        .doc-icon.docx{background:#dbeafe;color:#2563eb}
+        .doc-icon.xlsx{background:#dcfce7;color:#16a34a}
+        .doc-details{flex:1;min-width:0}
+        .doc-details h3{font-size:1rem;font-weight:700;color:var(--camp-primary);margin-bottom:.25rem}
+        .doc-meta{font-size:.8125rem;color:var(--gray-500);margin-bottom:.5rem}
+        .doc-desc{font-size:.875rem;color:var(--gray-600)}
+        .doc-download{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.25rem;background:var(--camp-primary);color:#fff;text-decoration:none;border-radius:10px;font-weight:600;font-size:.875rem;transition:all .2s;flex-shrink:0}
+        .doc-download:hover{background:var(--camp-secondary);transform:scale(1.02)}
+        @media(max-width:768px){
+            .sidebar{transform:translateX(-100%)}
+            .mobile-header{display:block}
+            .main{margin-left:0;padding:5rem 1rem 2rem}
+            .hero{padding:1.5rem;border-radius:16px}
+            .hero h1{font-size:1.75rem}
+            .hero p{font-size:1rem}
+            .cards{grid-template-columns:1fr}
+            .dates-grid{grid-template-columns:1fr}
+            .course-stats{grid-template-columns:repeat(2,1fr)}
+            .course-info p{font-size:.8125rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+            .type-badge{display:none}
+            .standards-grid{grid-template-columns:1fr}
+            .contact-grid{grid-template-columns:1fr}
+            .semester-tabs{justify-content:center}
+            .doc-header{flex-wrap:wrap}
+            .doc-download{width:100%;justify-content:center;margin-top:1rem}
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <header class="mobile-header">
+        <div class="mobile-header-content">
+            <div class="mobile-logo">
+                <div class="mobile-logo-icon"><i class="fas fa-stethoscope"></i></div>
+                <div><h1 style="font-size:1rem;font-weight:700">CAMP EMS</h1><p style="font-size:.75rem;color:#93c5fd">Paramedic Program</p></div>
+            </div>
+            <button class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars" id="menuIcon"></i></button>
+        </div>
+    </header>
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="nav-btn active" onclick="showSection('welcome',this)"><i class="fas fa-home"></i> Welcome</button>
+        <button class="nav-btn" onclick="showSection('overview',this)"><i class="fas fa-bullseye"></i> Program Overview</button>
+        <button class="nav-btn" onclick="showSection('schedule',this)"><i class="fas fa-calendar"></i> Schedule</button>
+        <button class="nav-btn" onclick="showSection('courses',this)"><i class="fas fa-book"></i> Courses</button>
+        <button class="nav-btn" onclick="showSection('requirements',this)"><i class="fas fa-check-circle"></i> Requirements</button>
+        <button class="nav-btn" onclick="showSection('resources',this)"><i class="fas fa-briefcase"></i> Resources</button>
+        <button class="nav-btn" onclick="showSection('documents',this)"><i class="fas fa-file-download"></i> Documents</button>
+        <button class="nav-btn" onclick="showSection('contact',this)"><i class="fas fa-phone"></i> Contact</button>
+        <a href="https://serajac.github.io/CAMP-EMS/index.html" target="_blank" class="web-link" style="margin:1rem"><i class="fas fa-external-link-alt"></i> Visit EMS Website</a>
+    </nav>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo"><div class="logo-icon"><i class="fas fa-stethoscope"></i></div><div class="logo-text"><h1>CAMP EMS</h1><p>Paramedic Program</p></div></div>
+            <p class="tagline">"Grow Your Future"</p>
+        </div>
+        <nav class="nav">
+            <button class="nav-btn active" onclick="showSection('welcome',this)"><i class="fas fa-home"></i> Welcome</button>
+            <button class="nav-btn" onclick="showSection('overview',this)"><i class="fas fa-bullseye"></i> Program Overview</button>
+            <button class="nav-btn" onclick="showSection('schedule',this)"><i class="fas fa-calendar"></i> Schedule</button>
+            <button class="nav-btn" onclick="showSection('courses',this)"><i class="fas fa-book"></i> Courses</button>
+            <button class="nav-btn" onclick="showSection('requirements',this)"><i class="fas fa-check-circle"></i> Requirements</button>
+            <button class="nav-btn" onclick="showSection('resources',this)"><i class="fas fa-briefcase"></i> Resources</button>
+            <button class="nav-btn" onclick="showSection('documents',this)"><i class="fas fa-file-download"></i> Documents</button>
+            <button class="nav-btn" onclick="showSection('contact',this)"><i class="fas fa-phone"></i> Contact</button>
+        </nav>
+        <div class="sidebar-footer"><a href="https://serajac.github.io/CAMP-EMS/index.html" target="_blank" class="web-link"><i class="fas fa-external-link-alt"></i> Visit EMS Website</a></div>
+    </aside>
+    <main class="main">
+        <!-- WELCOME -->
+        <section id="welcome" class="section active">
+            <div class="hero">
+                <div class="hero-badge"><i class="fas fa-star"></i> Welcome to Your Journey</div>
+                <h1>Paramedic Program<br><span>Spring & Summer 2026</span></h1>
+                <p>Welcome to Paul D. Camp Community College's Paramedic Program. You've made an exceptional choice—you're joining Virginia's only EMS program with Letters of Review from CoAEMSP for both AEMT and Paramedic certifications.</p>
+            </div>
+            <div class="cards">
+                <div class="card"><div class="card-icon orange"><i class="fas fa-map-marker-alt"></i></div><h3>Primary Location</h3><p class="card-sub">Suffolk Campus</p><div class="card-content"><strong>Hobbs Suffolk Campus</strong><br>271 Kenyon Road<br>Suffolk, VA 23434<br><span class="highlight">📞 757.925.6300</span></div></div>
+                <div class="card"><div class="card-icon blue"><i class="fas fa-building"></i></div><h3>Skill Labs Location</h3><p class="card-sub">Franklin Campus</p><div class="card-content"><strong>Franklin Campus / Workforce Development</strong><br>100 North College Drive<br>Franklin, VA 23851<br><span class="highlight">📞 757.569.6700</span></div></div>
+                <div class="card"><div class="card-icon green"><i class="fas fa-clock"></i></div><h3>Class Schedule</h3><p class="card-sub">Monday & Wednesday</p><div class="card-content"><strong>9:00 AM – 6:00 PM</strong><br>Spring: Jan 12 – Apr 29<br>Summer: May 18 – Aug 1<br><span class="highlight">33 Total Credits</span></div></div>
+            </div>
+            <div class="alert">
+                <div class="alert-header">
+                    <i class="fas fa-exclamation-circle alert-icon"></i>
+                    <div>
+                        <h3>Important First Day Information</h3>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i><span><strong>Sterling Credentials:</strong> We will walk you through purchasing your subscription in class ($154.44)</span></li>
+                            <li><i class="fas fa-check-circle"></i><span><strong>Polo Shirts:</strong> Our uniform vendor (Scrubs Plus) will be onsite for purchase ($41-51)</span></li>
+                            <li><i class="fas fa-check-circle"></i><span><strong>Textbook:</strong> Can be purchased prior to class - Sanders' Paramedic Textbook 6th Ed ($611.63)</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="dates-box">
+                <h3 class="section-title"><i class="fas fa-calendar-alt"></i> Key Dates - Academic Calendar</h3>
+                <div class="dates-grid">
+                    <div class="date-item deadline"><div class="date-dot"></div><div class="date-info"><strong>Jan 6, 2026</strong><span>Spring Tuition Due</span></div></div>
+                    <div class="date-item start"><div class="date-dot"></div><div class="date-info"><strong>Jan 12, 2026</strong><span>First Day of Class</span></div></div>
+                    <div class="date-item holiday"><div class="date-dot"></div><div class="date-info"><strong>Jan 19, 2026</strong><span>MLK Holiday</span></div></div>
+                    <div class="date-item holiday"><div class="date-dot"></div><div class="date-info"><strong>Mar 9-15, 2026</strong><span>Spring Break</span></div></div>
+                    <div class="date-item end"><div class="date-dot"></div><div class="date-info"><strong>Apr 29, 2026</strong><span>Spring Ends</span></div></div>
+                    <div class="date-item summer"><div class="date-dot"></div><div class="date-info"><strong>May 18, 2026</strong><span>Summer Begins</span></div></div>
+                    <div class="date-item holiday"><div class="date-dot"></div><div class="date-info"><strong>May 25, 2026</strong><span>Memorial Day</span></div></div>
+                    <div class="date-item holiday"><div class="date-dot"></div><div class="date-info"><strong>Jul 3, 2026</strong><span>Independence Day</span></div></div>
+                    <div class="date-item end"><div class="date-dot"></div><div class="date-info"><strong>Aug 1, 2026</strong><span>Program Completion</span></div></div>
+                </div>
+            </div>
+        </section>
+        <!-- OVERVIEW -->
+        <section id="overview" class="section">
+            <div style="text-align:center;max-width:700px;margin:0 auto 2rem">
+                <h2 style="font-size:2rem;font-weight:800;color:var(--camp-primary);margin-bottom:1rem">Your Path to Excellence</h2>
+                <p style="font-size:1.125rem;color:var(--gray-600);line-height:1.7">You've chosen more than a career—you've chosen to become someone who makes the difference between life and death.</p>
+            </div>
+            <div class="cards">
+                <div class="card"><div class="card-icon orange"><i class="fas fa-award"></i></div><h3>Virginia's Only</h3><p class="card-content">CoAEMSP Letters of Review for BOTH AEMT and Paramedic programs</p></div>
+                <div class="card"><div class="card-icon blue"><i class="fas fa-users"></i></div><h3>Expert Faculty</h3><p class="card-content">Learn from experienced EMS professionals dedicated to your success</p></div>
+                <div class="card"><div class="card-icon green"><i class="fas fa-heart"></i></div><h3>Hands-On Training</h3><p class="card-content">State-of-the-art simulation labs and real-world clinical experience</p></div>
+            </div>
+            <div class="dark-panel">
+                <h3><i class="fas fa-lightbulb"></i> Why CAMP is Different</h3>
+                <div class="checklist">
+                    <div class="check-item"><i class="fas fa-check"></i> Virginia's ONLY program with CoAEMSP Letters of Review for AEMT</div>
+                    <div class="check-item"><i class="fas fa-check"></i> Small class sizes with personalized attention</div>
+                    <div class="check-item"><i class="fas fa-check"></i> Strong partnerships with Norfolk Fire-Rescue and area EMS agencies</div>
+                    <div class="check-item"><i class="fas fa-check"></i> G3 Tuition Assistance eligible for qualifying students</div>
+                    <div class="check-item"><i class="fas fa-check"></i> Flexible scheduling with Monday/Wednesday classes</div>
+                    <div class="check-item"><i class="fas fa-check"></i> Credit for Prior Learning for certified EMS professionals</div>
+                    <div class="check-item"><i class="fas fa-check"></i> Average salary $45,266/year in Hampton Roads region</div>
+                    <div class="check-item"><i class="fas fa-check"></i> Complete program in 7 months (2 semesters)</div>
+                </div>
+            </div>
+            <div class="card" style="margin-bottom:2rem">
+                <h3 class="section-title">Program at a Glance</h3>
+                <div class="stats">
+                    <div class="stat"><p class="stat-val">33</p><p class="stat-label">Total Credits</p><p class="stat-sub">Paramedic Program</p></div>
+                    <div class="stat"><p class="stat-val">16</p><p class="stat-label">Spring Credits</p><p class="stat-sub">Jan - Apr</p></div>
+                    <div class="stat"><p class="stat-val">17</p><p class="stat-label">Summer Credits</p><p class="stat-sub">May - Aug</p></div>
+                    <div class="stat"><p class="stat-val">$5,674</p><p class="stat-label">In-State Tuition</p><p class="stat-sub">Paramedic only</p></div>
+                    <div class="stat"><p class="stat-val">Mon/Wed</p><p class="stat-label">Schedule</p><p class="stat-sub">9AM - 6PM</p></div>
+                </div>
+            </div>
+            <div class="success">
+                <h3>You Made the Right Choice</h3>
+                <p>By joining our program, you're not just getting an education—you're joining a family of dedicated professionals who will support you every step of the way. Our graduates work at top agencies across Hampton Roads, and our network will help open doors for your career.</p>
+                <p>The road ahead will challenge you, but you'll emerge as a highly skilled paramedic ready to save lives. We believe in you, and we're honored you've chosen to begin this journey with us.</p>
+                <p class="sig">— Dr. Carlos Cajares, Program Director</p>
+            </div>
+        </section>
+
+        <!-- SCHEDULE -->
+        <section id="schedule" class="section">
+            <div style="margin-bottom:1.5rem">
+                <h2 style="font-size:1.75rem;font-weight:800;color:var(--camp-primary);margin-bottom:.5rem">Class Schedule</h2>
+                <p style="color:var(--gray-600)">January 12 – August 1, 2026 | Monday & Wednesday | 9:00 AM – 6:00 PM</p>
+            </div>
+            <div class="semester-tabs">
+                <button class="semester-tab spring active" onclick="showSchedule('spring',this)"><i class="fas fa-snowflake"></i> Spring 2026 (16 cr)</button>
+                <button class="semester-tab summer" onclick="showSchedule('summer',this)"><i class="fas fa-sun"></i> Summer 2026 (17 cr)</button>
+            </div>
+
+            <!-- SPRING SCHEDULE -->
+            <div id="schedule-spring" class="schedule-panel active">
+                <div class="semester-header spring"><i class="fas fa-snowflake"></i> Spring 2026: January 12 – April 29 (16 weeks)</div>
+                <div class="table-wrap">
+                    <div class="table-scroll">
+                        <table>
+                            <thead><tr><th>Date</th><th>Course</th><th>Topic</th><th>Location</th></tr></thead>
+                            <tbody>
+                                <tr><td><strong>Mon 1/12</strong></td><td><span class="course-badge">EMS 221/222</span></td><td>First Day Paperwork, Med-Math Practice</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 1/14</strong></td><td><span class="course-badge">EMS 221/222</span></td><td>Med-Math, Basic ECG Concepts, ECG Interpretation Steps</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr class="holiday"><td><strong>Mon 1/19</strong></td><td></td><td>MLK Holiday - NO CLASS</td><td></td></tr>
+                                <tr><td><strong>Wed 1/21</strong></td><td><span class="course-badge">EMS 221/222</span></td><td>Dysrhythmias: SA Node, Atrial Origins</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr class="skill-lab"><td><strong>Mon 1/26</strong></td><td><span class="course-badge">EMS 221/222</span></td><td>A&P Review Heart, Electrophysiology</td><td><span class="loc franklin"><i class="fas fa-map-marker-alt"></i> Franklin</span></td></tr>
+                                <tr><td><strong>Wed 1/28</strong></td><td><span class="course-badge">EMS 221/222</span></td><td>Disorders of Conduction, BBB, Axis Determination</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr class="skill-lab"><td><strong>Mon 2/2</strong></td><td><span class="course-badge">EMS 221/222</span></td><td>Patient Assessment, Cardiovascular Pathophysiology</td><td><span class="loc franklin"><i class="fas fa-map-marker-alt"></i> Franklin</span></td></tr>
+                                <tr><td><strong>Wed 2/4</strong></td><td><span class="course-badge">EMS 221/222</span></td><td>Cardiovascular Disease Management Continued</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Mon 2/9</strong></td><td><span class="course-badge">EMS 221/222</span></td><td>Specific Heart Diseases, Valvular, Pericarditis</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr class="skill-lab"><td><strong>Wed 2/11</strong></td><td><span class="course-badge">EMS 221/222</span></td><td>Defibrillation, Cardioversion, TCP, Medications</td><td><span class="loc franklin"><i class="fas fa-map-marker-alt"></i> Franklin</span></td></tr>
+                                <tr class="skill-lab"><td><strong>Mon 2/16</strong></td><td><span class="course-badge">EMS 165</span></td><td>ACLS - Video Training, Mega-Code Practice</td><td><span class="loc franklin"><i class="fas fa-map-marker-alt"></i> Franklin</span></td></tr>
+                                <tr class="skill-lab"><td><strong>Wed 2/18</strong></td><td><span class="course-badge">EMS 165</span></td><td>ACLS - Written & Mega-Code Assessments</td><td><span class="loc franklin"><i class="fas fa-map-marker-alt"></i> Franklin</span></td></tr>
+                                <tr><td><strong>Mon 2/23</strong></td><td><span class="course-badge">EMS 223/224</span></td><td>Diseases of Eyes, Ears, Nose, Throat</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 2/25</strong></td><td><span class="course-badge">EMS 223/224</span></td><td>Respiratory Emergencies</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Mon 3/2</strong></td><td><span class="course-badge">EMS 223/224</span></td><td>Neurology</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 3/4</strong></td><td><span class="course-badge">EMS 223/224</span></td><td>Endocrinology</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr class="holiday"><td><strong>3/9-3/15</strong></td><td></td><td>SPRING BREAK - NO CLASS</td><td></td></tr>
+                                <tr><td><strong>Mon 3/16</strong></td><td><span class="course-badge">EMS 223/224</span></td><td>Immune System Disorders</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 3/18</strong></td><td><span class="course-badge">EMS 223/224</span></td><td>Infectious and Communicable Diseases</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Mon 3/23</strong></td><td><span class="course-badge">EMS 223/224</span></td><td>Abdominal/GI, Genitourinary/Renal Disorders</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 3/25</strong></td><td><span class="course-badge">EMS 223/224</span></td><td>Hematology, Toxicology</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Mon 3/30</strong></td><td><span class="course-badge">EMS 223/224</span></td><td>Behavioral and Psychiatric Disorders</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 4/1</strong></td><td><span class="course-badge">EMS 223/224</span></td><td>Non-Traumatic Muscular Disorders</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Mon 4/6</strong></td><td><span class="course-badge">EMS 223/224</span></td><td>Geriatrics, Abuse and Neglect</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 4/8</strong></td><td><span class="course-badge">EMS 223/224</span></td><td>Patients with Special Challenges, Home Care</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Mon 4/13</strong></td><td><span class="course-badge">EMS 223/224</span></td><td>Pediatrics</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 4/15</strong></td><td><span class="course-badge">EMS 223/224</span></td><td>Medical Review, Final Assessment</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr class="skill-lab"><td><strong>Mon 4/20</strong></td><td><span class="course-badge">EMS 164</span></td><td>AMLS Lectures and Simulation</td><td><span class="loc franklin"><i class="fas fa-map-marker-alt"></i> Franklin</span></td></tr>
+                                <tr class="skill-lab"><td><strong>Wed 4/22</strong></td><td><span class="course-badge">EMS 164</span></td><td>AMLS Lectures and Simulation</td><td><span class="loc franklin"><i class="fas fa-map-marker-alt"></i> Franklin</span></td></tr>
+                                <tr class="skill-lab"><td><strong>Mon 4/27</strong></td><td><span class="course-badge">EMS 169</span></td><td>PALS - Video Training, Mega-Code Practice</td><td><span class="loc franklin"><i class="fas fa-map-marker-alt"></i> Franklin</span></td></tr>
+                                <tr class="skill-lab"><td><strong>Wed 4/29</strong></td><td><span class="course-badge">EMS 169</span></td><td>PALS - Assessments</td><td><span class="loc franklin"><i class="fas fa-map-marker-alt"></i> Franklin</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="info-cards">
+                    <div class="info-card blue"><h4><i class="fas fa-laptop"></i> Online Courses (Spring)</h4><div class="info-row"><span>SDV 100 - College Success Skills</span><span>Jan 12 - Feb 28</span></div><div class="info-row"><span>EMS 210 - EMS Operations</span><span>Feb 1 - Feb 28</span></div><div class="info-row"><span>EMS 212 - Leadership & Prof Dev</span><span>Mar 1 - Mar 31</span></div></div>
+                    <div class="info-card purple"><h4><i class="fas fa-stethoscope"></i> Clinical/Field (Spring)</h4><p><strong>EMS 241 - Paramedic Internship I</strong></p><p>February 1 – April 30, 2026</p><p style="font-size:.75rem;color:#7c3aed;margin-top:.5rem">Schedule via Sterling Credentials</p></div>
+                </div>
+            </div>
+
+            <!-- SUMMER SCHEDULE -->
+            <div id="schedule-summer" class="schedule-panel">
+                <div class="semester-header summer"><i class="fas fa-sun"></i> Summer 2026: May 18 – August 1 (11 weeks)</div>
+                <div class="table-wrap">
+                    <div class="table-scroll">
+                        <table>
+                            <thead><tr><th class="summer-header">Date</th><th class="summer-header">Course</th><th class="summer-header">Topic</th><th class="summer-header">Location</th></tr></thead>
+                            <tbody>
+                                <tr><td><strong>Mon 5/18</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Orientation, Abdominal/GI Emergencies Review</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 5/20</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Genitourinary and Renal Emergencies</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr class="holiday"><td><strong>Mon 5/25</strong></td><td></td><td>Memorial Day Holiday - NO CLASS</td><td></td></tr>
+                                <tr><td><strong>Wed 5/27</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Gynecological Emergencies</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Mon 6/1</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Obstetric Emergencies, Normal Delivery</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 6/3</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Complicated Deliveries, Neonatal Resuscitation</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Mon 6/8</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Pediatric Medical Emergencies</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 6/10</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Pediatric Trauma, Geriatric Emergencies</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Mon 6/15</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Psychiatric Emergencies, Behavioral Crisis</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 6/17</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Toxicological Emergencies</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Mon 6/22</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Hematological Emergencies, Infectious Disease</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 6/24</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Environmental Emergencies</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Mon 6/29</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Trauma Assessment, Hemorrhage Control</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 7/1</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Head and Spine Trauma</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr class="holiday"><td><strong>Fri 7/3</strong></td><td></td><td>Independence Day (Observed) - NO CLASS</td><td></td></tr>
+                                <tr><td><strong>Mon 7/6</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Thoracic Trauma, Chest Decompression</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 7/8</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Abdominal Trauma, Musculoskeletal Trauma</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Mon 7/13</strong></td><td><span class="course-badge">EMS 225/226</span></td><td>Burns, Multi-System Trauma, MCI</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr class="skill-lab"><td><strong>Wed 7/15</strong></td><td><span class="course-badge">EMS 163</span></td><td>PHTLS - Lectures and Simulation</td><td><span class="loc franklin"><i class="fas fa-map-marker-alt"></i> Franklin</span></td></tr>
+                                <tr class="skill-lab"><td><strong>Mon 7/20</strong></td><td><span class="course-badge">EMS 163</span></td><td>PHTLS - Assessment</td><td><span class="loc franklin"><i class="fas fa-map-marker-alt"></i> Franklin</span></td></tr>
+                                <tr><td><strong>Wed 7/22</strong></td><td><span class="course-badge">EMS 216</span></td><td>Paramedic Review - Medical Content</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Mon 7/27</strong></td><td><span class="course-badge">EMS 216</span></td><td>Paramedic Review - Trauma & Operations</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr><td><strong>Wed 7/29</strong></td><td><span class="course-badge">EMS 216</span></td><td>Final Written Examination</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                                <tr style="background:#dcfce7"><td><strong>Sat 8/1</strong></td><td><span class="course-badge">FINALS</span></td><td>Practical Final Examinations - PROGRAM COMPLETION</td><td><span class="loc suffolk"><i class="fas fa-map-marker-alt"></i> Suffolk</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="info-cards">
+                    <div class="info-card green"><h4><i class="fas fa-book"></i> Concurrent Course (Summer)</h4><p><strong>BIO 141 - Human Anatomy & Physiology I</strong></p><p>May 18 – August 1, 2026</p><p style="font-size:.75rem;color:#166534;margin-top:.5rem">Evening/Online hybrid format available</p></div>
+                    <div class="info-card purple"><h4><i class="fas fa-stethoscope"></i> Clinical/Field (Summer)</h4><p><strong>EMS 246 - Paramedic Internship II:</strong> May 18 – Jul 1</p><p><strong>EMS 249 - Capstone Internship:</strong> Jul 1 – Aug 1</p><p style="font-size:.75rem;color:#7c3aed;margin-top:.5rem">Schedule via Sterling Credentials</p></div>
+                </div>
+            </div>
+        </section>
+        <!-- COURSES -->
+        <section id="courses" class="section">
+            <div style="margin-bottom:1.5rem"><h2 style="font-size:1.75rem;font-weight:800;color:var(--camp-primary);margin-bottom:.5rem">Program Courses</h2><p style="color:var(--gray-600)">33 Total Credits | Click any course for details</p></div>
+            
+            <!-- SPRING COURSES -->
+            <div class="semester-header spring" style="margin-top:1.5rem"><i class="fas fa-snowflake"></i> Spring 2026 Courses (16 Credits)</div>
+            <div class="course-list" style="margin-bottom:2rem">
+                <div class="course-item" id="course-ems221"><div class="course-header" onclick="toggleCourse('ems221')"><div class="course-header-left"><div class="course-credits lecture">3cr</div><div class="course-info"><h3>EMS 221</h3><p>Paramedic Cardiovascular Care</p></div></div><div class="course-header-right"><span class="type-badge lecture">Lecture</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">3 Credits</span><span class="badge-sm spring">Spring</span></div><div class="course-section"><h4>Description</h4><p>Covers in-depth assessment and management of cardiovascular conditions. Includes ALS airway management, electrical therapy, pharmacology, and drug/fluid administration with emphasis on patient assessment, differential diagnosis, and management of cardiovascular emergencies.</p></div><div class="course-section"><h4>Key Topics</h4><div class="topic-tags"><span class="topic-tag">ECG Interpretation</span><span class="topic-tag">Dysrhythmias</span><span class="topic-tag">ACS Management</span><span class="topic-tag">Heart Failure</span><span class="topic-tag">Cardiac Arrest</span></div></div></div></div>
+                
+                <div class="course-item" id="course-ems222"><div class="course-header" onclick="toggleCourse('ems222')"><div class="course-header-left"><div class="course-credits lab">1cr</div><div class="course-info"><h3>EMS 222</h3><p>Paramedic Cardiovascular Care Lab</p></div></div><div class="course-header-right"><span class="type-badge lab">Lab</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">1 Credit</span><span class="badge-sm spring">Spring</span></div><div class="course-section"><h4>Lab Competencies</h4><ul class="obj-list"><li><i class="fas fa-check"></i> Interpret basic EKG rhythms and associated treatments</li><li><i class="fas fa-check"></i> Defibrillate patients in arrest scenarios</li><li><i class="fas fa-check"></i> Initiate transcutaneous pacing</li><li><i class="fas fa-check"></i> Perform synchronized cardioversion</li><li><i class="fas fa-check"></i> Acquire and interpret 12-lead ECGs</li></ul></div></div></div>
+                
+                <div class="course-item" id="course-ems223"><div class="course-header" onclick="toggleCourse('ems223')"><div class="course-header-left"><div class="course-credits lecture">3cr</div><div class="course-info"><h3>EMS 223</h3><p>Paramedic Patient Care I</p></div></div><div class="course-header-right"><span class="type-badge lecture">Lecture</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">3 Credits</span><span class="badge-sm spring">Spring</span></div><div class="course-section"><h4>Description</h4><p>Covers the breadth of medical conditions as outlined by NEMSES for Paramedics. Part I of II. Equips students with knowledge to deliver effective patient care across the lifespan.</p></div><div class="course-section"><h4>Key Topics</h4><div class="topic-tags"><span class="topic-tag">Respiratory</span><span class="topic-tag">Neurology</span><span class="topic-tag">Endocrinology</span><span class="topic-tag">Toxicology</span><span class="topic-tag">Behavioral</span><span class="topic-tag">Pediatrics</span><span class="topic-tag">Geriatrics</span><span class="topic-tag">Infectious Disease</span></div></div></div></div>
+                
+                <div class="course-item" id="course-ems224"><div class="course-header" onclick="toggleCourse('ems224')"><div class="course-header-left"><div class="course-credits lab">1cr</div><div class="course-info"><h3>EMS 224</h3><p>Paramedic Patient Care I Lab</p></div></div><div class="course-header-right"><span class="type-badge lab">Lab</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">1 Credit</span><span class="badge-sm spring">Spring</span></div><div class="course-section"><h4>Lab Competencies</h4><ul class="obj-list"><li><i class="fas fa-check"></i> Care of pediatric patients with respiratory distress/failure</li><li><i class="fas fa-check"></i> Care of geriatric patients with signs/symptoms of stroke</li><li><i class="fas fa-check"></i> Obstetric and gynecologic complaints management</li><li><i class="fas fa-check"></i> Surgical cricothyrotomy demonstration</li><li><i class="fas fa-check"></i> Care for chest pain, overdose, allergic reaction, hypoglycemia, seizure, shock</li></ul></div></div></div>
+                
+                <div class="course-item" id="course-ems165"><div class="course-header" onclick="toggleCourse('ems165')"><div class="course-header-left"><div class="course-credits cert">1cr</div><div class="course-info"><h3>EMS 165</h3><p>Advanced Cardiac Life Support (ACLS)</p></div></div><div class="course-header-right"><span class="type-badge cert">Cert</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">1 Credit</span><span class="badge-sm spring">Spring</span><span class="badge-sm accent">AHA Certification</span></div><div class="course-section"><h4>Description</h4><p>AHA ACLS Provider course covering recognition and management of cardiac arrest rhythms, stroke, and acute coronary syndromes. Students receive AHA ACLS Provider certification upon completion.</p></div></div></div>
+                
+                <div class="course-item" id="course-ems164"><div class="course-header" onclick="toggleCourse('ems164')"><div class="course-header-left"><div class="course-credits cert">1cr</div><div class="course-info"><h3>EMS 164</h3><p>Advanced Medical Life Support (AMLS)</p></div></div><div class="course-header-right"><span class="type-badge cert">Cert</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">1 Credit</span><span class="badge-sm spring">Spring</span><span class="badge-sm accent">NAEMT Certification</span></div><div class="course-section"><h4>Description</h4><p>NAEMT AMLS certification course focusing on assessment-based approach to medical emergencies with emphasis on critical thinking and rapid decision-making.</p></div></div></div>
+                
+                <div class="course-item" id="course-ems169"><div class="course-header" onclick="toggleCourse('ems169')"><div class="course-header-left"><div class="course-credits cert">1cr</div><div class="course-info"><h3>EMS 169</h3><p>Pediatric Advanced Life Support (PALS)</p></div></div><div class="course-header-right"><span class="type-badge cert">Cert</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">1 Credit</span><span class="badge-sm spring">Spring</span><span class="badge-sm accent">AHA Certification</span></div><div class="course-section"><h4>Description</h4><p>AHA PALS Provider course covering recognition and management of pediatric emergencies including respiratory distress, shock, and cardiac arrest.</p></div></div></div>
+                
+                <div class="course-item" id="course-sdv100"><div class="course-header" onclick="toggleCourse('sdv100')"><div class="course-header-left"><div class="course-credits online">1cr</div><div class="course-info"><h3>SDV 100</h3><p>College Success Skills</p></div></div><div class="course-header-right"><span class="type-badge online">Online</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">1 Credit</span><span class="badge-sm spring">Spring</span><span class="badge-sm gray">Jan 12 - Feb 28</span></div><div class="course-section"><h4>Description</h4><p>Orientation to higher education with focus on goal setting, time management, study skills, note-taking, test-taking, and critical thinking.</p></div></div></div>
+                
+                <div class="course-item" id="course-ems210"><div class="course-header" onclick="toggleCourse('ems210')"><div class="course-header-left"><div class="course-credits online">1cr</div><div class="course-info"><h3>EMS 210</h3><p>EMS Operations</p></div></div><div class="course-header-right"><span class="type-badge online">Online</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">1 Credit</span><span class="badge-sm spring">Spring</span><span class="badge-sm gray">Feb 1 - Feb 28</span></div><div class="course-section"><h4>Description</h4><p>EMS operations, incident management, triage, MCI operations, and ICS. Required for NREMT Paramedic certification.</p></div></div></div>
+                
+                <div class="course-item" id="course-ems212"><div class="course-header" onclick="toggleCourse('ems212')"><div class="course-header-left"><div class="course-credits online">1cr</div><div class="course-info"><h3>EMS 212</h3><p>Leadership & Professional Development</p></div></div><div class="course-header-right"><span class="type-badge online">Online</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">1 Credit</span><span class="badge-sm spring">Spring</span><span class="badge-sm gray">Mar 1 - Mar 31</span></div><div class="course-section"><h4>Description</h4><p>Leadership development in EMS including civic engagement, personal wellness, resource management, ethics, and community paramedicine concepts.</p></div></div></div>
+                
+                <div class="course-item" id="course-ems241"><div class="course-header" onclick="toggleCourse('ems241')"><div class="course-header-left"><div class="course-credits online">2cr</div><div class="course-info"><h3>EMS 241</h3><p>Paramedic Internship I</p></div></div><div class="course-header-right"><span class="type-badge online">Clinical</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">2 Credits</span><span class="badge-sm spring">Spring</span><span class="badge-sm gray">Feb 1 - Apr 30</span></div><div class="course-section"><h4>Description</h4><p>Introduction to live patient assessment and management in clinical and field settings. Students complete hospital rotations and ambulance ride-alongs under preceptor supervision.</p></div></div></div>
+            </div>
+
+            <!-- SUMMER COURSES -->
+            <div class="semester-header summer"><i class="fas fa-sun"></i> Summer 2026 Courses (17 Credits)</div>
+            <div class="course-list">
+                <div class="course-item" id="course-bio141"><div class="course-header" onclick="toggleCourse('bio141')"><div class="course-header-left"><div class="course-credits lecture">4cr</div><div class="course-info"><h3>BIO 141</h3><p>Human Anatomy & Physiology I</p></div></div><div class="course-header-right"><span class="type-badge lecture">Lecture/Lab</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">4 Credits</span><span class="badge-sm summer">Summer</span></div><div class="course-section"><h4>Description</h4><p>Integrates anatomy and physiology of cells, tissues, organs, and the integumentary, skeletal, muscular, and nervous systems. Emphasizes homeostatic mechanisms. Evening/Online hybrid format available.</p></div></div></div>
+                
+                <div class="course-item" id="course-ems225"><div class="course-header" onclick="toggleCourse('ems225')"><div class="course-header-left"><div class="course-credits lecture">5cr</div><div class="course-info"><h3>EMS 225</h3><p>Paramedic Patient Care II</p></div></div><div class="course-header-right"><span class="type-badge lecture">Lecture</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">5 Credits</span><span class="badge-sm summer">Summer</span></div><div class="course-section"><h4>Description</h4><p>Covers the depth of medical and trauma conditions. Part II of II. Advanced assessment and management with deeper exploration of pathophysiology and treatment modalities.</p></div></div></div>
+                
+                <div class="course-item" id="course-ems226"><div class="course-header" onclick="toggleCourse('ems226')"><div class="course-header-left"><div class="course-credits lab">2cr</div><div class="course-info"><h3>EMS 226</h3><p>Paramedic Patient Care II Lab</p></div></div><div class="course-header-right"><span class="type-badge lab">Lab</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">2 Credits</span><span class="badge-sm summer">Summer</span></div><div class="course-section"><h4>Lab Competencies</h4><ul class="obj-list"><li><i class="fas fa-check"></i> Surgical cricothyrotomy</li><li><i class="fas fa-check"></i> Needle and finger thoracostomy</li><li><i class="fas fa-check"></i> Advanced hemorrhage control</li><li><i class="fas fa-check"></i> Assisted and emergency childbirth</li><li><i class="fas fa-check"></i> Neonatal resuscitation</li></ul></div></div></div>
+                
+                <div class="course-item" id="course-ems163"><div class="course-header" onclick="toggleCourse('ems163')"><div class="course-header-left"><div class="course-credits cert">1cr</div><div class="course-info"><h3>EMS 163</h3><p>Prehospital Trauma Life Support (PHTLS)</p></div></div><div class="course-header-right"><span class="type-badge cert">Cert</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">1 Credit</span><span class="badge-sm summer">Summer</span><span class="badge-sm accent">NAEMT Certification</span></div><div class="course-section"><h4>Description</h4><p>NAEMT PHTLS certification focusing on assessment and management of trauma patients with emphasis on rapid assessment, intervention, and transport decisions.</p></div></div></div>
+                
+                <div class="course-item" id="course-ems216"><div class="course-header" onclick="toggleCourse('ems216')"><div class="course-header-left"><div class="course-credits lecture">1cr</div><div class="course-info"><h3>EMS 216</h3><p>Paramedic Review</p></div></div><div class="course-header-right"><span class="type-badge lecture">Lecture</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">1 Credit</span><span class="badge-sm summer">Summer</span></div><div class="course-section"><h4>Description</h4><p>Comprehensive review course preparing students for the National Registry Paramedic examination. Covers all cognitive domains with emphasis on exam strategies and content review.</p></div></div></div>
+                
+                <div class="course-item" id="course-ems246"><div class="course-header" onclick="toggleCourse('ems246')"><div class="course-header-left"><div class="course-credits online">2cr</div><div class="course-info"><h3>EMS 246</h3><p>Paramedic Internship II</p></div></div><div class="course-header-right"><span class="type-badge online">Clinical</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">2 Credits</span><span class="badge-sm summer">Summer</span><span class="badge-sm gray">May 18 - Jul 1</span></div><div class="course-section"><h4>Description</h4><p>Continues live patient assessment and management. Students progress toward increased independence while maintaining preceptor oversight.</p></div></div></div>
+                
+                <div class="course-item" id="course-ems249"><div class="course-header" onclick="toggleCourse('ems249')"><div class="course-header-left"><div class="course-credits online">2cr</div><div class="course-info"><h3>EMS 249</h3><p>Paramedic Capstone Internship</p></div></div><div class="course-header-right"><span class="type-badge online">Clinical</span><i class="fas fa-chevron-right chevron"></i></div></div><div class="course-content"><div class="course-badges"><span class="badge-sm primary">2 Credits</span><span class="badge-sm summer">Summer</span><span class="badge-sm gray">Jul 1 - Aug 1</span></div><div class="course-section"><h4>Description</h4><p>Culminating clinical experience where students demonstrate entry-level competency as a paramedic, functioning as team leader under preceptor supervision.</p></div></div></div>
+            </div>
+        </section>
+        <!-- REQUIREMENTS -->
+        <section id="requirements" class="section">
+            <div style="margin-bottom:1.5rem"><h2 style="font-size:1.75rem;font-weight:800;color:var(--camp-primary);margin-bottom:.5rem">Program Requirements</h2><p style="color:var(--gray-600)">Ensure you meet all prerequisites before starting</p></div>
+            <div class="req-grid">
+                <div class="req-card"><h3><i class="fas fa-graduation-cap"></i> Prerequisites</h3><ul class="req-list"><li><i class="fas fa-check-circle"></i> Current Virginia AEMT certification (or NREMT with VA reciprocity)</li><li><i class="fas fa-check-circle"></i> Current CPR certification (AHA BLS Provider)</li><li><i class="fas fa-check-circle"></i> Admission to Paul D. Camp Community College</li><li><i class="fas fa-check-circle"></i> Completed health requirements</li><li><i class="fas fa-check-circle"></i> Background check clearance</li><li><i class="fas fa-check-circle"></i> Active Sterling Credentials account</li></ul></div>
+                <div class="req-card"><h3><i class="fas fa-heartbeat"></i> Health Requirements</h3><ul class="req-list"><li><i class="fas fa-check-circle"></i> Physical Exam (within 1 year)</li><li><i class="fas fa-check-circle"></i> TB Screening (QuantiFERON Gold)</li><li><i class="fas fa-check-circle"></i> Varicella vaccination</li><li><i class="fas fa-check-circle"></i> MMR vaccination</li><li><i class="fas fa-check-circle"></i> TDAP (within 10 years)</li><li><i class="fas fa-check-circle"></i> Hepatitis B series</li><li><i class="fas fa-check-circle"></i> Annual Influenza vaccine</li></ul></div>
+            </div>
+            <div class="standards">
+                <h3>Academic Standards</h3>
+                <div class="standards-grid">
+                    <div class="standard-item"><p class="standard-val orange">75%</p><p class="standard-label">Minimum Passing Grade</p></div>
+                    <div class="standard-item"><p class="standard-val blue">90%</p><p class="standard-label">Required Attendance</p></div>
+                    <div class="standard-item"><p class="standard-val green">100%</p><p class="standard-label">Clinical Competencies</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESOURCES -->
+        <section id="resources" class="section">
+            <div style="margin-bottom:1.5rem"><h2 style="font-size:1.75rem;font-weight:800;color:var(--camp-primary);margin-bottom:.5rem">Required Materials & Resources</h2><p style="color:var(--gray-600)">Everything you need to succeed</p></div>
+            <div class="textbook">
+                <h3><i class="fas fa-book-open"></i> Primary Textbook</h3>
+                <div class="textbook-box">
+                    <p class="textbook-name">Sanders' Paramedic Textbook, 6th Edition</p>
+                    <p class="textbook-info">Jones & Bartlett Learning</p>
+                    <p class="textbook-info">ISBN: 978-1-284-27751-7</p>
+                    <p class="textbook-price">$611.63</p>
+                    <a href="https://checkout.jblearning.com/cart/Default.aspx?bc=27751-7&ref=psg&coupon=pdc30" target="_blank" class="textbook-btn"><i class="fas fa-shopping-cart"></i> Purchase Textbook</a>
+                    <p class="textbook-note">* Use code pdc30 for discount | Includes Navigate 2 online access</p>
+                </div>
+            </div>
+            <div class="materials-grid">
+                <div class="materials-card">
+                    <h3>Required Materials</h3>
+                    <div class="material-item"><div><span class="material-name">Sterling Credentials</span><div class="material-note">Clinical tracking</div></div><span class="material-price">$154.44</span></div>
+                    <div class="material-item"><div><span class="material-name">Viewpoint Portal</span><div class="material-note">Course access</div></div><span class="material-price">$65.00</span></div>
+                    <div class="material-item"><div><span class="material-name">Uniform Polo</span><div class="material-note">Navy blue</div></div><span class="material-price">$41-51</span></div>
+                </div>
+                <div class="materials-card">
+                    <h3>Equipment Needed</h3>
+                    <div class="material-item"><span class="material-name">Stethoscope (dual-head or sprague)</span><span class="material-price">Required</span></div>
+                    <div class="material-item"><span class="material-name">Penlight</span><span class="material-price">Required</span></div>
+                    <div class="material-item"><span class="material-name">Watch with Seconds Display</span><span class="material-price">Required</span></div>
+                </div>
+                <div class="materials-card">
+                    <h3>Certification Manuals (Provided)</h3>
+                    <div class="material-item"><span class="material-name">AHA ACLS Provider Manual</span><span class="material-price">Included</span></div>
+                    <div class="material-item"><span class="material-name">AHA PALS Provider Manual</span><span class="material-price">Included</span></div>
+                    <div class="material-item"><span class="material-name">NAEMT PHTLS Manual</span><span class="material-price">Included</span></div>
+                    <div class="material-item"><span class="material-name">NAEMT AMLS Manual</span><span class="material-price">Included</span></div>
+                </div>
+            </div>
+            <div class="alert" style="background:linear-gradient(135deg,#fef3c7,#fde68a)">
+                <div class="alert-header">
+                    <i class="fas fa-tshirt" style="font-size:1.5rem;color:var(--camp-primary)"></i>
+                    <div>
+                        <h3>Uniform Information</h3>
+                        <p style="margin-bottom:.75rem">Our uniform vendor, <strong>Scrubs Plus</strong>, will be onsite on the first day of class for polo shirt purchases.</p>
+                        <div style="background:#fff;border-radius:12px;padding:1rem">
+                            <p style="font-weight:600;color:var(--gray-800)">Scrubs Plus</p>
+                            <p style="font-size:.875rem;color:var(--gray-600)">1001 Centerbrooke Ln, Suffolk, VA 23434</p>
+                            <p style="font-size:.875rem;color:var(--gray-600)">(757) 922-7010</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DOCUMENTS -->
+        <section id="documents" class="section">
+            <div style="margin-bottom:1.5rem"><h2 style="font-size:1.75rem;font-weight:800;color:var(--camp-primary);margin-bottom:.5rem">Program Documents</h2><p style="color:var(--gray-600)">Download important program documents and resources</p></div>
+            
+            <div class="alert" style="background:linear-gradient(135deg,var(--camp-light),#dbeafe);border-color:#93c5fd;margin-bottom:2rem">
+                <div class="alert-header">
+                    <i class="fas fa-info-circle" style="font-size:1.5rem;color:#2563eb"></i>
+                    <div>
+                        <h3 style="color:#1e40af">Important Documents for Your Success</h3>
+                        <p style="color:#1e40af">Please download and review all documents before the first day of class. The Student Handbook contains essential policies and procedures you must follow throughout the program.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <div class="doc-header">
+                    <div class="doc-icon pdf"><i class="fas fa-file-pdf"></i></div>
+                    <div class="doc-details">
+                        <h3>EMS Student Handbook (Rev 2.6)</h3>
+                        <p class="doc-meta">PDF • 204 KB • February 2026</p>
+                        <p class="doc-desc">Comprehensive guide to program policies, requirements, clinical expectations, and student conduct standards. Required reading for all students.</p>
+                    </div>
+                    <a href="EMS_Student_Handbook_Rev_2_6.pdf" download class="doc-download"><i class="fas fa-download"></i> Download</a>
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <div class="doc-header">
+                    <div class="doc-icon docx"><i class="fas fa-file-word"></i></div>
+                    <div class="doc-details">
+                        <h3>Consolidated Course Syllabus 2026</h3>
+                        <p class="doc-meta">DOCX • 73 KB • Spring & Summer 2026</p>
+                        <p class="doc-desc">Complete syllabus covering all courses for both semesters, including course descriptions, learning objectives, grading policies, and detailed schedules.</p>
+                    </div>
+                    <a href="Standard_Paramedic_Consolidated_Syllabus_2026.docx" download class="doc-download"><i class="fas fa-download"></i> Download</a>
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <div class="doc-header">
+                    <div class="doc-icon pdf"><i class="fas fa-file-pdf"></i></div>
+                    <div class="doc-details">
+                        <h3>New CAMP Paramedic Program Overview</h3>
+                        <p class="doc-meta">PDF • 188 KB</p>
+                        <p class="doc-desc">Program highlights, tuition information, credit requirements, and details about Credit for Prior Learning opportunities.</p>
+                    </div>
+                    <a href="New_CAMP_Paramedic_Program.pdf" download class="doc-download"><i class="fas fa-download"></i> Download</a>
+                </div>
+            </div>
+
+            <div class="doc-card">
+                <div class="doc-header">
+                    <div class="doc-icon xlsx"><i class="fas fa-file-excel"></i></div>
+                    <div class="doc-details">
+                        <h3>Spring 2026 Class Schedule</h3>
+                        <p class="doc-meta">XLSX • 9 KB • January - April 2026</p>
+                        <p class="doc-desc">Detailed day-by-day class schedule with topics, locations, and important dates for the Spring 2026 semester.</p>
+                    </div>
+                    <a href="Paramedic_Schedule_Spring_2026.xlsx" download class="doc-download"><i class="fas fa-download"></i> Download</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="section">
+            <div style="margin-bottom:1.5rem"><h2 style="font-size:1.75rem;font-weight:800;color:var(--camp-primary);margin-bottom:.5rem">Contact Information</h2><p style="color:var(--gray-600)">We're here to help you succeed</p></div>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-header">
+                        <div class="contact-avatar"><i class="fas fa-user"></i></div>
+                        <div><p class="contact-name">Dr. Carlos Cajares, DHSc, MPA, NRP</p><p class="contact-title">EMS Program Director</p></div>
+                    </div>
+                    <div class="contact-links">
+                        <a href="/cdn-cgi/l/email-protection#630000020902110610231307004d060716" class="contact-link"><i class="fas fa-envelope"></i> <span class="__cf_email__" data-cfemail="137070727972617660536377703d767766">[email&#160;protected]</span></a>
+                        <a href="tel:7579256325" class="contact-link"><i class="fas fa-phone"></i> 757.925.6325</a>
+                    </div>
+                </div>
+                <div class="staff-card">
+                    <h3>Program Staff</h3>
+                    <div class="staff-list">
+                        <div class="staff-item"><p class="staff-name">Dr. Angela Sheaffer, DNP, RN, CCRN-K</p><p class="staff-role">Dean of Nursing and Allied Health</p><a href="/cdn-cgi/l/email-protection#fb9a88939e9a9d9d9e89bb8b9f98d59e9f8e" class="staff-email"><span class="__cf_email__" data-cfemail="83e2f0ebe6e2e5e5e6f1c3f3e7e0ade6e7f6">[email&#160;protected]</span> • 757.569.6751</a></div>
+                        <div class="staff-item"><p class="staff-name">Dr. Joel Michael, MD</p><p class="staff-role">Medical Director</p><a href="/cdn-cgi/l/email-protection#63090e0a000b02060f231307004d060716" class="staff-email"><span class="__cf_email__" data-cfemail="5c3631353f343d39301c2c383f72393829">[email&#160;protected]</span></a></div>
+                        <div class="staff-item"><p class="staff-name">Tammy Buchanan, AAS, NRP</p><p class="staff-role">Clinical Coordinator</p><a href="/cdn-cgi/l/email-protection#2e5a4c5b4d464f404f406e5e4a4d004b4a5b" class="staff-email"><span class="__cf_email__" data-cfemail="c4b0a6b1a7aca5aaa5aa84b4a0a7eaa1a0b1">[email&#160;protected]</span> • 757.681.0204</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="website-banner">
+                <h3>Visit Our EMS Website</h3>
+                <p>For more information about our programs, resources, and updates</p>
+                <a href="https://serajac.github.io/CAMP-EMS/index.html" target="_blank" class="website-btn"><i class="fas fa-external-link-alt"></i> CAMP EMS Website</a>
+            </div>
+        </section>
+    </main>
+</div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function showSection(id,btn){
+    document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    if(btn)btn.classList.add('active');
+    closeMobileMenu();
+}
+function toggleCourse(id){document.getElementById('course-'+id).classList.toggle('expanded')}
+function showSchedule(sem,btn){
+    document.querySelectorAll('.schedule-panel').forEach(p=>p.classList.remove('active')
